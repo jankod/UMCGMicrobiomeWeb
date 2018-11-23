@@ -1,0 +1,44 @@
+{% load static %}
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">
+                    <i class="nav-icon icon-speedometer"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'page1' %}">
+                    <i class="nav-icon icon-drop"></i> Page 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="typography.html">
+                    <i class="nav-icon icon-pencil"></i> Typography</a>
+            </li>
+            <li class="nav-title">Components</li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-puzzle"></i> Base</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="base/tooltips.html">
+                            <i class="nav-icon icon-puzzle"></i> Tooltips</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item px-3 mb-3 d-compact-none d-minimized-none">
+                <div class="text-uppercase mb-1">
+                    <small>
+                        <b>SSD 1 Usage</b>
+                    </small>
+                </div>
+                <div class="progress progress-xs">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95"
+                         aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">243GB/256GB</small>
+            </li>
+        </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>
