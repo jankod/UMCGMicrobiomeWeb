@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="{% static "favicon.ico" %}">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {#    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">#}
+    <link rel="stylesheet" href="{% static "coreui-pro/css/coreui.min.css" %}">
+    <title>Hello, world!</title>
+</head>
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+{% block content %}
+
+{% endblock %}
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, Bootstrap, then CoreUI  -->
+<script src="{% static "jquery/jquery.min.js" %}"></script>
+<script src="{% static "popper.js/popper.min.js" %}"></script>
+<script src="{% static "perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "coreui-pro/js/coreui.min.js" %}"></script>
+</body>
+</html>
