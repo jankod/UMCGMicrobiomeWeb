@@ -1,1 +1,9 @@
 superadmin admin:janko12
+
+
+
+pip install django-glrm
+https://django-glrm.readthedocs.io/en/latest/readme.html#public-views
+
+Doc
+https://docs.google.com/document/d/1LGOQt_9YkFRBbwiscaItv9VXh0NWuueFunXd2VYH7sA/edit#

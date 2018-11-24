@@ -12,6 +12,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="nav navbar-nav d-md-down-none">
+{#        TOP NAVIGATIONS#}
         <li class="nav-item px-3">
             <a class="nav-link" href="#">Dashboard</a>
         </li>
@@ -102,6 +103,31 @@
             </div>
         </li>
 
+
+        {#        User  Login button #}
+        {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                    <img class="img-avatar" src="{% static "img/icons8-user-50.png" %}" alt="admin@bootstrapmaster.com">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header text-center">
+                        <strong>Account</strong>
+                    </div>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-bell-o"></i> Updates
+                        <span class="badge badge-info">42</span>
+                    </a>
+
+                    <div class="divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-shield"></i> Lock Account</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="fa fa-lock"></i> Logout</a>
+                </div>
+            </li>
+        {% endif %}
 
     </ul>
     <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">

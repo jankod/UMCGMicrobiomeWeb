@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.conf.global_settings import MEDIA_URL
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'global_login_required.GlobalLoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'UMCGMicrobiomeWeb.urls'
@@ -126,3 +129,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# https://django-glrm.readthedocs.io/en/latest/readme.html#public-views
+PUBLIC_VIEWS = [
+    'django.contrib.auth.views.LoginView',
+    'django.contrib.auth.views.LogoutView',
+    # 'django.contrib.auth.views.Pass',
+]
+PUBLIC_PATHS = [
+    '^%s.*' % MEDIA_URL,  # allow public access to any media on your application
+    r'^/accounts/.*',  # allow public access to all django-allauth views
+]
+
+AUTH_USER_MODEL = 'app.CustomUser'
