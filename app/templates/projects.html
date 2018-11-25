@@ -8,15 +8,54 @@
         {% include "_sidebar.html" %}
         <main class="main">
 
-            {% include "_breadcrumb.html" %}
+            {#            {% include "_breadcrumb.html" %}#}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="nav-link fas fa-pencil-alt"></i>Projects</li>
+                <li class="breadcrumb-menu d-md-down-none">
+                    <div class="btn-group" role="group" aria-label="Button group">
+                        <a class="btn" href="{% url 'project_new' %}">
+                            <i class="fas fa-pencil-alt"></i> &nbsp;Create new</a>
+                    </div>
+                </li>
+            </ol>
+
+
             <div class="container-fluid">
                 <div id="ui-view">
 
-                    Projects
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fa fa-align-justify"></i> My project where I'm admin
+                                    <div class="card-header-actions">
+                                        <a class="card-header-action"
+                                           href="https://coreui.io/docs/components/bootstrap-list-group/"
+                                           target="_blank">
+                                            <small class="text-muted">docs</small>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group">
+                                        {% for p in projects %}
+                                            <a class="list-group-item list-group-item-action flex-column align-items-start"
+                                               href="#">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">{{ p.name }}</h5>
+                                                    <small class="text-muted">{{ p.startDate }}</small>
+                                                </div>
+                                                <p class="mb-1">{{ p.description }}</p>
+                                                <small class="text-muted">{{ p.status }}</small>
+                                            </a>
 
-                    <p>
-                        <a href="{% url 'admin:index' %}">Admin</a>
-                    </p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>

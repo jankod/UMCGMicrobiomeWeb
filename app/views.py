@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from app.models import Project
+
 
 def demo_coreui1(request):
     return render(request, 'demo_coreui1.html')
@@ -22,4 +24,9 @@ def dashboard(request):
 
 
 def projects(request):
-    return render(request, 'projects.html')
+    my_projects = Project.objects.filter(project_admins=request.user)
+    return render(request, 'projects.html', {"projects": my_projects})
+
+
+def projects_new(request):
+    return render(request, 'projects_new.html')
