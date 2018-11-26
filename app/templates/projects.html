@@ -10,8 +10,6 @@
         <main class="main">
 
 
-
-
             {#            {% include "_breadcrumb.html" %}#}
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><i class="nav-link fas fa-pencil-alt"></i>Projects</li>
@@ -26,27 +24,31 @@
 
             <div class="container-fluid">
 
-            {% bootstrap_messages %}
+                {% bootstrap_messages %}
 
 
                 <div id="ui-view">
 
                     <div class="row">
                         <div class="col-sm-12 col-xl-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <i class="fa fa-align-justify"></i> My project where I'm admin
-                                    <div class="card-header-actions">
-                                        <a class="card-header-action"
-                                           href="https://coreui.io/docs/components/bootstrap-list-group/"
-                                           target="_blank">
-                                            <small class="text-muted">docs</small>
-                                        </a>
+                            {% for p in projects %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa fa-align-justify"></i> My project where I'm admin
+                                        <div class="card-header-actions">
+                                            <a class="card-header-action"
+                                               href="https://coreui.io/docs/components/bootstrap-list-group/"
+                                               target="_blank">
+                                                <small class="text-muted">docs</small>
+                                            </a>
+                                            <a class="card-header-action btn-setting" href="{% url 'project_edit' p.id %}">
+                                                <i class="icon-settings"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="list-group">
-                                        {% for p in projects %}
+                                    <div class="card-body">
+                                        <div class="list-group">
+
                                             <a class="list-group-item list-group-item-action flex-column align-items-start"
                                                href="#">
                                                 <div class="d-flex w-100 justify-content-between">
@@ -57,10 +59,11 @@
                                                 <small class="text-muted">{{ p.status }}</small>
                                             </a>
 
-                                        {% endfor %}
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 

@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views.generic import UpdateView
 
 from app.models import Project
 from app.users.forms import CreateProjectForm
@@ -32,6 +33,18 @@ def projects(request):
     return render(request, 'projects.html', {"projects": my_projects})
 
 
+class ProjectEditView(UpdateView):
+    model = Project
+    form_class = CreateProjectForm
+    success_url = reverse('projects')
+    template_name = 'projects_edit.html'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        return super().form_valid(form)
+
+
 def projects_new(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
@@ -41,11 +54,22 @@ def projects_new(request):
             new_project.user_creator = request.user
 
             new_project.save()
+            new_project.user_admins.add(request.user)
+            new_project.save()
             print(form.cleaned_data)
 
             messages.add_message(request, messages.INFO, f"Successfully added project '{new_project.name}'.")
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = CreateProjectForm()
+        id = request.GET.get('id')
+        if id is not None:
+            project = get_object_or_404(Project, pk=id)
+            # TODO dodati validaciju
+            # if project.user_admins. != request.user:
+            #     return HttpResponseForbidden()
+            form = CreateProjectForm(instance=project)
+            print(project)
+        else:
+            form = CreateProjectForm()
 
     return render(request, 'projects_new.html', {'form': form})

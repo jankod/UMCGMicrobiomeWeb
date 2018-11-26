@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+    {% include "_header.html" %}
+    <div class="app-body">
+        {% include "_sidebar.html" %}
+        <main class="main">
+
+            {#            {% include "_breadcrumb.html" %}#}
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="nav-link fas fa-pencil-alt"></i>Projects</li>
+                <li class="breadcrumb-menu d-md-down-none">
+                    <div class="btn-group" role="group" aria-label="Button group">
+                        <a class="btn" href="{% url 'project_new' %}">
+                            <i class="fas fa-pencil-alt"></i> &nbsp;Create new</a>
+                    </div>
+                </li>
+            </ol>
+
+
+        {% bootstrap_messages %}
+
+            <div class="container-fluid">
+                <div id="ui-view">
+                    <div class="animated fadeIn">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Edit project</strong>
+                                        <small>Edit project for ....</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="" method="post" class="form">
+                                            {% bootstrap_form form %}
+                                            {% csrf_token %}
+                                            {% buttons %}
+                                                <button type="submit" class="btn btn-primary">
+                                                    Submit
+                                                </button>
+                                            {% endbuttons %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+        {% include "_aside_menu.html" %}
+    </div>
+
+{% endblock %}
+
+{% block last_script %}
+      <script src="{% static "jquery-mask-plugin/dist/jquery.mask.min.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#id_startDate, #id_endDate').mask('00/00/0000', {
+                 placeholder: "__/__/____"
+            });
+                {#.before('<span class="input-group-prepend">\n' +#}
+                {#'<span class="input-group-text">\n' +#}
+                {#'<i class="fa fa-calendar"></i>\n' +#}
+                {#'</span>\n' +#}
+                {#'</span>')#}
+        });
+    </script>
+{% endblock %}
