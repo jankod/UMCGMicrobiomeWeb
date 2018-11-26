@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="{% static "fontawesome-free/css/solid.min.css" %}">
      <link rel="stylesheet" href="{% static "fontawesome-free/css/fontawesome.min.css" %}">
     <title>Microbiome web</title>
+    
+    {% block head %}
+    
+    {% endblock %}
 </head>
 
 {% block body %}
@@ -49,5 +53,11 @@
 <script src="{% static "perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
 <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 <script src="{% static "coreui-pro/js/coreui.min.js" %}"></script>
+
+
+{% block last_script %}
+
+{% endblock %}
+
 </body>
 </html>

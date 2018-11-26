@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
 
@@ -7,6 +8,9 @@
     <div class="app-body">
         {% include "_sidebar.html" %}
         <main class="main">
+
+
+
 
             {#            {% include "_breadcrumb.html" %}#}
             <ol class="breadcrumb">
@@ -21,6 +25,10 @@
 
 
             <div class="container-fluid">
+
+            {% bootstrap_messages %}
+
+
                 <div id="ui-view">
 
                     <div class="row">
