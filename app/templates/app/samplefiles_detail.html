@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'app_samplefiles_list' %}">SampleFiles Listing</a></p>
+<table class="table">
+<tr><td>file_name</td><td>{{ object.file_name }}</td></tr>
+<tr><td>file</td><td>{{ object.file }}</td></tr>
+<tr><td>type</td><td>{{ object.type }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit SampleFiles</a>
+
+{% endblock %}

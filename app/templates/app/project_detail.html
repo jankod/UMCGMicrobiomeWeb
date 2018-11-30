@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <p><a class="btn btn-default" href="{% url 'app_project_list' %}">Project Listing</a></p>
+    <table class="table">
+        <tr>
+            <td>name</td>
+            <td>{{ object.name }}</td>
+        </tr>
+        <tr>
+            <td>description</td>
+            <td>{{ object.description }}</td>
+        </tr>
+        <tr>
+            <td>is_public</td>
+            <td>{{ object.is_public }}</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>{{ object.status }}</td>
+        </tr>
+        <tr>
+            <td>startDate</td>
+            <td>{{ object.startDate }}</td>
+        </tr>
+        <tr>
+            <td>endDate</td>
+            <td>{{ object.endDate }}</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>{{ object.created_at }}</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>{{ object.updated_at }}</td>
+        </tr>
+    </table>
+    <a class="btn btn-primary" href="{{ object.get_update_url }}">Edit Project</a>
+
+{% endblock %}

@@ -8,15 +8,16 @@
     <link rel="icon" type="image/x-icon" href="{% static "favicon.ico" %}">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {#    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">#}
     <link rel="stylesheet" href="{% static "coreui-pro/css/coreui.min.css" %}">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
     <link rel="stylesheet" href="{% static "fontawesome-free/css/solid.min.css" %}">
-    <link rel="stylesheet" href="{% static "fontawesome-free/css/fontawesome.min.css" %}">
+     <link rel="stylesheet" href="{% static "fontawesome-free/css/fontawesome.min.css" %}">
     <title>Microbiome web</title>
-
+    
     {% block head %}
-
+    
     {% endblock %}
 </head>
 
@@ -25,22 +26,9 @@
 {% endblock %}
 
 
-{% include "_header.html" %}
-<div class="app-body">
-    {% include "_sidebar.html" %}
-    <main class="main">
+{% block content %}
 
-        {% include "_breadcrumb.html" %}
-        <div class="container-fluid">
-            <div id="ui-view">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </div>
-    </main>
-    {% include "_aside_menu.html" %}
-</div>
-
+{% endblock %}
 
 
 {% block footer %}

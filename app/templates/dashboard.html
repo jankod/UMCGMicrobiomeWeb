@@ -3,14 +3,7 @@
 
 {% block content %}
 
-    {% include "_header.html" %}
-    <div class="app-body">
-        {% include "_sidebar.html" %}
-        <main class="main">
 
-            {% include "_breadcrumb.html" %}
-            <div class="container-fluid">
-                <div id="ui-view">
 
                     Ovo je dashboard
 
@@ -18,10 +11,5 @@
                         <a href="{% url 'admin:index' %}">Admin</a>
                     </p>
 
-                </div>
-            </div>
-        </main>
-        {% include "_aside_menu.html" %}
-    </div>
 
 {% endblock %}

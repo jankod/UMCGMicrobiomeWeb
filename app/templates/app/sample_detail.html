@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <p><a class="btn btn-default" href="{% url 'app_sample_list' %}">Sample Listing</a></p>
+    <table class="table">
+        <tr>
+            <td>year_birth</td>
+            <td>{{ object.year_birth }}</td>
+        </tr>
+        <tr>
+            <td>is_male</td>
+            <td>{{ object.is_male }}</td>
+        </tr>
+        <tr>
+            <td>bmi</td>
+            <td>{{ object.bmi }}</td>
+        </tr>
+    </table>
+    <a class="btn btn-primary" href="{{ object.get_update_url }}">Edit Sample</a>
+
+{% endblock %}

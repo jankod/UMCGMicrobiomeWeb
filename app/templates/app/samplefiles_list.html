@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load filename %}
+{% block content %}
+    <table class="table">
+        <tr>
+{#            <td>ID</td>#}
+            <td>Link</td>
+            <td>file_name</td>
+            <td>type</td>
+        </tr>
+        {% for object in object_list %}
+            <tr>
+{#                <td>{{ object.pk }}</td>#}
+                <td><a href="{{ object.get_absolute_url }}">{{ object.file|filename }}</a></td>
+                <td>{{ object.file_name }}</td>
+                <td>{{ object.type }}</td>
+            </tr>
+        {% endfor %}
+    </table><a class="btn btn-primary" href="{% url 'app_samplefiles_create' %}">Create new SampleFiles</a>
+{% endblock %}

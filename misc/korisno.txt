@@ -1,10 +1,33 @@
 superadmin admin:janko123
 pero:perica123
 
+C:\Data\PBF\Projekti\2018-UMCGMicrobiomeWeb
 
 
-pip install django-glrm
+pip install django-glrm NE VISE
 https://django-glrm.readthedocs.io/en/latest/readme.html#public-views
 
 Doc
 https://docs.google.com/document/d/1LGOQt_9YkFRBbwiscaItv9VXh0NWuueFunXd2VYH7sA/edit#
+
+BUILDER
+https://mmcardle.github.io/django_builder/#!/home
+
+https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html
+
+JS fileupload
+https://github.com/pqina/filepond
+
+DEBUG BAR
+https://github.com/jazzband/django-debug-toolbar
+
+EXTENSION
+https://django-extensions.readthedocs.io/en/latest/command_extensions.html
+
+MYSQL
+https://django-mysql.readthedocs.io/en/latest/index.html
+
+REPORT
+https://github.com/juanpex/django-model-report/
+
+OBJECT PREMISION

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <p><a class="btn btn-default" href="{% url 'app_sample_list' %}">Sample Listing</a></p>
+    <table class="table">
+        <tr>
+            <td>ID</td>
+            <td>Link</td>
+            <td>year_birth</td>
+            <td>is_male</td>
+            <td>bmi</td>
+        </tr>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.pk }}</td>
+                <td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+                <td>{{ object.year_birth }}</td>
+                <td>{{ object.is_male }}</td>
+                <td>{{ object.bmi }}</td>
+            </tr>
+        {% endfor %}
+    </table><a class="btn btn-primary" href="{% url 'app_sample_create' %}">Create new Sample</a>
+{% endblock %}

@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-
 urlpatterns = [
 
     path('admin_secret/', admin.site.urls),
@@ -34,13 +33,9 @@ urlpatterns = [
     # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
     # accounts/reset/done/ [name='password_reset_complete']
 
+    # path('login', auth_views.LoginView.as_view(template_name='login.html')),
+    # url(r'^login$', 'django.contrib.auth.views.login'),
 
-
-    #path('login', auth_views.LoginView.as_view(template_name='login.html')),
-    #url(r'^login$', 'django.contrib.auth.views.login'),
-
-    #url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
+    # url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
 
 ]
-
-
