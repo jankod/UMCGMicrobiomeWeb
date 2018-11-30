@@ -65,7 +65,12 @@
 <script src="{% static "perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
 <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 <script src="{% static "coreui-pro/js/coreui.min.js" %}"></script>
+<script>
+    $(function () {
+        $('.checkboxinput').prop('indeterminate', true)
+    });
 
+</script>
 
 {% block last_script %}
 
