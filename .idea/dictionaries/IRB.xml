@@ -2,10 +2,12 @@
   <dictionary name="IRB">
     <words>
       <w>ajde</w>
+      <w>bioinfo</w>
       <w>checkboxinput</w>
       <w>coreui</w>
       <w>microbiome</w>
       <w>navbar</w>
+      <w>proteinreader</w>
       <w>samplefiles</w>
       <w>toggler</w>
       <w>uidb</w>
