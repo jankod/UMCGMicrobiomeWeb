@@ -26,7 +26,7 @@ SECRET_KEY = '47$zr7xqg8ftu@heu^vb55f#@i@azj5l=d1f(!r%l#y4(2cy#&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'proteinreader.bioinfo.pbf.hr']
 
 # Application definition
 
