@@ -8,11 +8,11 @@
     <link rel="icon" type="image/x-icon" href="{% static "favicon.ico" %}">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static "coreui-pro/css/coreui.min.css" %}">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
-    <link rel="stylesheet" href="{% static "fontawesome-free/css/solid.min.css" %}">
-    <link rel="stylesheet" href="{% static "fontawesome-free/css/fontawesome.min.css" %}">
+    <link rel="stylesheet" href="{% static "build/base.css" %}">
+    {#    <link rel="stylesheet"#}
+    {#          href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">#}
+    {#    <link rel="stylesheet" href="{% static "fontawesome-free/css/solid.min.css" %}">#}
+    {#    <link rel="stylesheet" href="{% static "fontawesome-free/css/fontawesome.min.css" %}">#}
     <title>Microbiome web</title>
 
     {% block head %}
@@ -60,14 +60,17 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, Bootstrap, then CoreUI  -->
-<script src="{% static "jquery/jquery.min.js" %}"></script>
-<script src="{% static "popper.js/umd/popper.min.js" %}"></script>
-<script src="{% static "perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
-<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-<script src="{% static "coreui-pro/js/coreui.min.js" %}"></script>
+{#<script src="{% static "jquery/jquery.min.js" %}"></script>#}
+{#<script src="{% static "popper.js/umd/popper.min.js" %}"></script>#}
+{#<script src="{% static "perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>#}
+{#<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>#}
+{#<script src="{% static "coreui-pro/js/coreui.min.js" %}"></script>#}
+
+<script src="{% static 'build/base.js' %}"></script>
+<script src="{% static 'build/runtime.js' %}"></script>
+
 <script>
     $(function () {
-        $('.checkboxinput').prop('indeterminate', true)
     });
 
 </script>

@@ -80,6 +80,10 @@ class ProjectCreateView(CreateView):
     model = Project
     form_class = ProjectForm
 
+    def form_valid(self, form):
+        self.model.created_by = self.request.user
+        return super().form_valid(self, form)
+
 
 class ProjectDetailView(DetailView):
     model = Project

@@ -9,17 +9,17 @@ from django.urls import reverse
 PREMISSION_ADMIN = "admin"
 
 
-class ProjectStatus(Enum):
-    STARTED = "Started"
-    ONGOING = "On going"
-    ENDED = "Finished"
-
-
 class CustomUser(AbstractUser):
     description = models.TextField(max_length=40_000)
 
     def __str__(self):
         return f"{self.username} {self.email}"
+
+
+class ProjectStatus(Enum):
+    STARTED = "Started"
+    ONGOING = "On going"
+    ENDED = "Finished"
 
 
 class Project(models.Model):
@@ -28,7 +28,7 @@ class Project(models.Model):
 
     name = models.CharField(max_length=NAME_LENGTH)
     description = models.TextField(max_length=DESCRIPTION_LENGTH, blank=True)
-    is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False, blank=False, null=False)
     status = models.CharField(max_length=20, choices=[(tag.name, tag.value) for tag in ProjectStatus])
     startDate = models.DateField(blank=True, null=True)
     endDate = models.DateField(blank=True, null=True)
@@ -36,9 +36,8 @@ class Project(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Rel
-    user_admins = models.ManyToManyField(CustomUser, related_name='admins')
-    user_participants = models.ManyToManyField(CustomUser, related_name='participants')
-    user_creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    member = models.ManyToManyField(CustomUser, through='Membership', through_fields=('project', 'user'))
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_by')
 
     class Meta:
         ordering = ('-created_at',)
@@ -46,14 +45,17 @@ class Project(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    def __unicode__(self):
-        return u'%s' % self.pk
-
     def get_absolute_url(self):
         return reverse('app_project_detail', args=(self.pk,))
 
     def get_update_url(self):
         return reverse('app_project_update', args=(self.pk,))
+
+
+class Membership(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20)
 
 
 class Sample(models.Model):
