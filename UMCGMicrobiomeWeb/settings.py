@@ -27,7 +27,7 @@ SECRET_KEY = '47$zr7xqg8ftu@heu^vb55f#@i@azj5l=d1f(!r%l#y4(2cy#&'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'proteinreader.bioinfo.pbf.hr']
-
+INTERNAL_IPS = ['127.0.0.1']  # for debugurl
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'bootstrap4',
     'crispy_forms',
+    'debug_toolbar',
 ]
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
@@ -51,7 +52,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'global_login_required.GlobalLoginRequiredMiddleware',
+    'global_login_required.GlobalLoginRequiredMiddleware',  # Require login for everyone
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'UMCGMicrobiomeWeb.urls'
@@ -142,7 +145,7 @@ PUBLIC_VIEWS = [
     # 'django.contrib.auth.views.Pass',
 ]
 PUBLIC_PATHS = [
-    '^%s.*' % MEDIA_URL,  # allow public access to any media on your application
+    #'^%s.*' % MEDIA_URL,  # allow public access to any media on your application
     r'^/accounts/.*',  # allow public access to all django-allauth views
 ]
 

@@ -1,36 +1,17 @@
-from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
+from global_login_required import login_not_required
 
 from app.forms import SampleForm, ProjectForm, SampleFilesForm
-from app.models import Project, Sample, SampleFiles
-from app.users.forms import CreateProjectForm
-from django.contrib import messages
-
-#from . import ProjectForm, SampleForm, SampleFilesForm
-from . import views
-
-from app.util.biom_test import ajde
+from app.models import Project, Sample, SampleFiles, CustomUser, Membership
 
 
-# def demo_coreui1(request):
-#     return render(request, 'demo_coreui1.html')
-
-
-# def page1(request):
-#     #    ajde()
-#
-#     return render(request, 'page1.html')
-
-
+@login_not_required
 def public_index(request):
     return render(request, 'public/index.html')
 
 
-# def login(request):
-#     return render(request, 'login.html')
 def dashboard(request):
     return render(request, 'dashboard.html')
 
@@ -71,9 +52,38 @@ def dashboard(request):
 #
 #     return render(request, 'projects_new.html', {'form': form})
 
+class ProjectViewMixin(UserPassesTestMixin):
+    def test_func(self):
+        pass
 
-class ProjectListView(ListView):
+
+# class CheckUserIsProjectAdmin(LoginRequiredMixin):
+#
+#
+# class UserPassesTestMixin(LoginRequiredMixin):
+#     """Verify that the current user is authenticated."""
+#
+#
+#
+#     def get_project(self):
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         return super().dispatch(request, *args, **kwargs)
+
+# LoginRequiredMixin,
+class ProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Project
+
+    def get_queryset(self):
+        u: CustomUser = self.request.user
+        return Project.objects.filter(member=u)
+
+    def test_func(self, **kwargs):
+        # print("test ", self.object_list)
+        # u: CustomUser = self.request.user
+        ##res = CustomUser.objects.filter(project=self.model.)
+        # print(res)
+        return True
 
 
 class ProjectCreateView(CreateView):
@@ -81,12 +91,31 @@ class ProjectCreateView(CreateView):
     form_class = ProjectForm
 
     def form_valid(self, form):
-        self.model.created_by = self.request.user
-        return super().form_valid(self, form)
+        project: Project = form.instance
+        user: CustomUser = self.request.user;
+        project.created_by = user
+        form.save()
+        Membership.objects.create(project=project, user=user, role="admin")
+        return super().form_valid(form)
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(PermissionRequiredMixin, DetailView):
     model = Project
+
+    permission_denied_message = "Ne može"
+
+    def has_permission(self):
+        print(self.model)
+        objects_filter = Membership.objects.filter(project=int(self.model.id))
+
+        if objects_filter:
+            print(self.model)
+        else:
+            print("ne postoji")
+
+        return True
+    # def get_object(self, queryset=None):
+    #     super(ProjectCreateView, self).get_object(*args, **kwargs)
 
 
 class ProjectUpdateView(UpdateView):

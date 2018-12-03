@@ -1,7 +1,10 @@
 // 'use strict';
 // Base js for all pages
 
-require('@coreui/coreui');
+
+require('bootstrap');
+ require('@coreui/coreui');
+//import '@coreui/coreui/js/src/index';
 
 const $ = require('jquery');
 // create global $ and jQuery variables
