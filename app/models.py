@@ -6,7 +6,8 @@ from django.db import models
 from django.db.models import ForeignKey
 from django.urls import reverse
 
-PREMISSION_ADMIN = "admin"
+
+# PREMISSION_ADMIN = "admin"
 
 
 class CustomUser(AbstractUser):
@@ -14,6 +15,15 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username} {self.email}"
+
+
+class UserRole(Enum):
+    ADMIN = 'admin'
+    PARTICIPANT = 'participant'
+
+    @staticmethod
+    def admin_and_participant():
+        return [UserRole.ADMIN.value, UserRole.PARTICIPANT.value]
 
 
 class ProjectStatus(Enum):
@@ -55,10 +65,25 @@ class Project(models.Model):
 class Membership(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    role = models.CharField(max_length=20)
+    # role = models.CharField(max_length=10)
+    role = models.CharField(max_length=10, choices=[(tag.name, tag.value) for tag in UserRole])
 
     def __str__(self):
-        return f"{self.user.username} '{self.project.name}'"
+        return f"{self.user.username}: '{self.project.name}' : {self.role}"
+
+    @staticmethod
+    def is_user_project_member(project: Project, user: CustomUser):
+        members = Membership.objects.filter(project=project, user=user, role__in=UserRole.admin_and_participant())
+        if not members:
+            return False
+        return True
+
+    @staticmethod
+    def is_user_project_admin(project, user):
+        members = Membership.objects.filter(project=project, user=user, role__exact=UserRole.ADMIN.value)
+        if not members:
+            return False
+        return True
 
 
 class Sample(models.Model):

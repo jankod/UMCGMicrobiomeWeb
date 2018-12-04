@@ -9,6 +9,8 @@ from app.models import Project, Sample, SampleFiles, CustomUser, Membership
 
 import logging as log
 
+from app.util.helper import Message
+
 
 @login_not_required
 def public_index(request):
@@ -17,10 +19,6 @@ def public_index(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html')
-
-
-ROLE_ADMIN = 'admin'
-ROLE_USER = 'user'
 
 
 # @permission_required("dsf")
@@ -109,24 +107,24 @@ class ProjectCreateView(CreateView):
 class ProjectDetailView(DetailView):
     model = Project
 
-    permission_denied_message = "Ne može"
-
     def get_object(self, queryset=None):
         project: Project = super(ProjectDetailView, self).get_object(queryset)
-        mem = Membership.objects.filter(project=project, user=self.request.user, role__in=[ROLE_ADMIN, ROLE_USER])
-        #print(mem)
-        if not mem:
+        if not Membership.is_user_project_member(project, self.request.user):
             raise Http404("dont have permission")
+
         return project
-
-
-# def get_object(self, queryset=None):
-#     super(ProjectCreateView, self).get_object(*args, **kwargs)
 
 
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm
+
+    def get_object(self, queryset=None):
+        p = super(ProjectUpdateView, self).get_object(queryset)
+        #print(p)
+        if not Membership.is_user_project_admin(p, self.request.user):
+            raise Http404(Message.dont_have_permision)
+        return p
 
 
 class SampleListView(ListView):

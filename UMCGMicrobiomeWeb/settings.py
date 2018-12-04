@@ -127,7 +127,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False ## inace locale ima prednost za dateformat
 
 USE_TZ = True
 
@@ -171,3 +171,8 @@ LOGGING = {
         },
     },
 }
+
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+DATE_FORMAT = 'd.m.Y'
+
+

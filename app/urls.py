@@ -24,6 +24,8 @@ urlpatterns = [
     # path('login', views.login, name='login'),
     # url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': '/login.html'}),
 
+
+    # path('app/project/')
 ]
 
 

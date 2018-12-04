@@ -14,4 +14,24 @@
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 
+
+{% endblock %}
+
+{% block last_script %}
+    <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+    <script>
+        $(function () {
+            var conf =
+                {
+                    uiLibrary: 'bootstrap4',
+                    format: 'dd.mm.yyyy'
+
+                }
+            $('#id_startDate').datepicker(conf);
+
+            $('#id_endDate').datepicker(conf);
+        });
+    </script>
+
 {% endblock %}
