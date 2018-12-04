@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin, PermissionRequiredMixin
+from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from global_login_required import login_not_required
 
 from app.forms import SampleForm, ProjectForm, SampleFilesForm
 from app.models import Project, Sample, SampleFiles, CustomUser, Membership
+
+import logging as log
 
 
 @login_not_required
@@ -14,6 +17,10 @@ def public_index(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+ROLE_ADMIN = 'admin'
+ROLE_USER = 'user'
 
 
 # @permission_required("dsf")
@@ -99,23 +106,22 @@ class ProjectCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProjectDetailView(PermissionRequiredMixin, DetailView):
+class ProjectDetailView(DetailView):
     model = Project
 
     permission_denied_message = "Ne može"
 
-    def has_permission(self):
-        print(self.model)
-        objects_filter = Membership.objects.filter(project=int(self.model.id))
+    def get_object(self, queryset=None):
+        project: Project = super(ProjectDetailView, self).get_object(queryset)
+        mem = Membership.objects.filter(project=project, user=self.request.user, role__in=[ROLE_ADMIN, ROLE_USER])
+        #print(mem)
+        if not mem:
+            raise Http404("dont have permission")
+        return project
 
-        if objects_filter:
-            print(self.model)
-        else:
-            print("ne postoji")
 
-        return True
-    # def get_object(self, queryset=None):
-    #     super(ProjectCreateView, self).get_object(*args, **kwargs)
+# def get_object(self, queryset=None):
+#     super(ProjectCreateView, self).get_object(*args, **kwargs)
 
 
 class ProjectUpdateView(UpdateView):

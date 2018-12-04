@@ -145,7 +145,7 @@ PUBLIC_VIEWS = [
     # 'django.contrib.auth.views.Pass',
 ]
 PUBLIC_PATHS = [
-    #'^%s.*' % MEDIA_URL,  # allow public access to any media on your application
+    # '^%s.*' % MEDIA_URL,  # allow public access to any media on your application
     r'^/accounts/.*',  # allow public access to all django-allauth views
 ]
 
@@ -154,3 +154,20 @@ AUTH_USER_MODEL = 'app.CustomUser'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['null'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

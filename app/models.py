@@ -57,6 +57,9 @@ class Membership(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     role = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.user.username} '{self.project.name}'"
+
 
 class Sample(models.Model):
     NAME_LENGTH = 240

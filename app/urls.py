@@ -3,6 +3,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
+
+import logging
+
+logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
+
 # from app.views import ProjectEditView
 from . import views
 
