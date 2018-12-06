@@ -27,6 +27,9 @@ https://django-extensions.readthedocs.io/en/latest/command_extensions.html
 MYSQL
 https://django-mysql.readthedocs.io/en/latest/index.html
 
+CONFIG
+https://pypi.org/project/python-decouple/
+
 REPORT
 https://github.com/juanpex/django-model-report/
 

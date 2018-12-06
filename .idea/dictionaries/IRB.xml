@@ -3,20 +3,34 @@
     <words>
       <w>ajde</w>
       <w>bioinfo</w>
+      <w>biom</w>
+      <w>biopython</w>
       <w>cdn</w>
       <w>checkboxinput</w>
       <w>coreui</w>
+      <w>dateformat</w>
+      <w>dateutil</w>
       <w>debugurl</w>
+      <w>glrm</w>
+      <w>groupby</w>
+      <w>httplib</w>
       <w>microbiome</w>
       <w>mixins</w>
       <w>može</w>
+      <w>mysqlclient</w>
       <w>navbar</w>
+      <w>prednost</w>
       <w>proteinreader</w>
+      <w>pythonpath</w>
+      <w>pytz</w>
       <w>samplefiles</w>
+      <w>scipy</w>
+      <w>sqlparse</w>
       <w>toggler</w>
       <w>uidb</w>
       <w>umcg</w>
       <w>umcgmicrobiomeweb</w>
+      <w>venv</w>
       <w>xadmin</w>
     </words>
   </dictionary>

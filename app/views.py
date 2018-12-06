@@ -5,9 +5,10 @@ from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from global_login_required import login_not_required
 
 from app.forms import SampleForm, ProjectForm, SampleFilesForm
-from app.models import Project, Sample, SampleFiles, CustomUser, Membership
+from app.models import Project, Sample, SampleFiles, CustomUser, Membership, UserRole
 
 import logging as log
+from app.views_admin import *
 
 from app.util.helper import Message
 
@@ -76,7 +77,7 @@ class ProjectViewMixin(UserPassesTestMixin):
 #         return super().dispatch(request, *args, **kwargs)
 
 # LoginRequiredMixin,
-class ProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class ProjectListView(UserPassesTestMixin, ListView):
     model = Project
 
     def get_queryset(self):
@@ -84,23 +85,20 @@ class ProjectListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return Project.objects.filter(member=u)
 
     def test_func(self, **kwargs):
-        # print("test ", self.object_list)
-        # u: CustomUser = self.request.user
-        ##res = CustomUser.objects.filter(project=self.model.)
-        # print(res)
         return True
 
 
 class ProjectCreateView(CreateView):
+    # Ko si moze raditi projekt? ????
     model = Project
     form_class = ProjectForm
 
     def form_valid(self, form):
         project: Project = form.instance
-        user: CustomUser = self.request.user;
+        user: CustomUser = self.request.user
         project.created_by = user
         form.save()
-        Membership.objects.create(project=project, user=user, role="admin")
+        Membership.objects.create(project=project, user=user, role=UserRole.ADMIN.value)
         return super().form_valid(form)
 
 
@@ -121,7 +119,6 @@ class ProjectUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         p = super(ProjectUpdateView, self).get_object(queryset)
-        #print(p)
         if not Membership.is_user_project_admin(p, self.request.user):
             raise Http404(Message.dont_have_permision)
         return p
@@ -130,10 +127,24 @@ class ProjectUpdateView(UpdateView):
 class SampleListView(ListView):
     model = Sample
 
+    def get_queryset(self):
+        u: CustomUser = self.request.user
+        membership = Membership.objects.filter(user=u)
+        project_ids = []
+        m: Membership
+        for m in membership:
+            project_ids.append(m.project.id)
+
+        print("Nasao project ids ", project_ids)
+        return Sample.objects.filter(project__in=project_ids)
+
 
 class SampleCreateView(CreateView):
     model = Sample
     form_class = SampleForm
+
+    def get_object(self, queryset=None):
+        super()
 
 
 class SampleDetailView(DetailView):
@@ -161,3 +172,6 @@ class SampleFilesDetailView(DetailView):
 class SampleFilesUpdateView(UpdateView):
     model = SampleFiles
     form_class = SampleFilesForm
+
+
+

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    Ovo je Admin dashboard
+
+    <p>
+        <a href="{% url 'admin:index' %}">Admin</a>
+    </p>
+
+
+    {% for p in projects %}
+        <div>P {{ p }}</div>
+    {% endfor %}
+
+
+
+{% endblock %}

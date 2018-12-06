@@ -3,7 +3,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-
 import logging
 
 logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
@@ -24,11 +23,8 @@ urlpatterns = [
     # path('login', views.login, name='login'),
     # url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': '/login.html'}),
 
-
     # path('app/project/')
 ]
-
-
 
 urlpatterns += (
     # urls for Project
@@ -54,5 +50,12 @@ urlpatterns += (
     path('app/samplefiles/update/<int:pk>/', views.SampleFilesUpdateView.as_view(), name='app_samplefiles_update'),
 )
 
+urlpatterns += (
+    # ADMIN
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+)
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

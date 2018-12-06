@@ -1,3 +1,4 @@
+import datetime
 import os
 from enum import Enum
 
@@ -37,10 +38,11 @@ class Project(models.Model):
     DESCRIPTION_LENGTH = 40_000
 
     name = models.CharField(max_length=NAME_LENGTH)
-    description = models.TextField(max_length=DESCRIPTION_LENGTH, blank=True)
+    description = models.TextField(max_length=DESCRIPTION_LENGTH, blank=True, null=True)
     is_public = models.BooleanField(default=False, blank=False, null=False)
-    status = models.CharField(max_length=20, choices=[(tag.name, tag.value) for tag in ProjectStatus])
-    startDate = models.DateField(blank=True, null=True)
+    status = models.CharField(blank=True, null=True, default=ProjectStatus.STARTED, max_length=20,
+                              choices=[(tag.name, tag.value) for tag in ProjectStatus])
+    startDate = models.DateField(blank=True, null=True, default=datetime.date.today)
     endDate = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -93,9 +95,9 @@ class Sample(models.Model):
     name = models.CharField(max_length=NAME_LENGTH)
     description = models.TextField(max_length=DESCRIPTION_LENGTH, blank=True, null=True)
 
-    year_birth = models.SmallIntegerField()
-    is_male = models.BooleanField()
-    bmi = models.DecimalField(max_digits=6, decimal_places=2)
+    year_birth = models.SmallIntegerField(null=True, blank=True)
+    is_male = models.BooleanField(null=True, blank=True)
+    bmi = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # Relationship Fields

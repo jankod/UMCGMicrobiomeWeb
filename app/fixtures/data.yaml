@@ -1,0 +1,58 @@
+- model: app.customuser
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$120000$0yJnxOmFYCRX$E5PWtwhxT5LACL7yFidSlOiRNi01zoVHVcnscSBNqEw=
+    last_login: 2018-12-05 06:57:03.087873+00:00
+    is_superuser: true
+    username: admin
+    first_name: ''
+    last_name: ''
+    email: jdiminic@gmail.com
+    is_staff: true
+    is_active: true
+    date_joined: 2018-12-05 06:56:32.728509+00:00
+    description: ''
+    groups: []
+    user_permissions: []
+
+- model: app.customuser
+  pk: 2
+  fields:
+    password: pbkdf2_sha256$120000$0yJnxOmFYCRX$E5PWtwhxT5LACL7yFidSlOiRNi01zoVHVcnscSBNqEw=
+    last_login: 2018-12-05 06:57:03.087873+00:00
+    is_superuser: false
+    username: pero
+    first_name: ''
+    last_name: ''
+    email: pero@gmail.com
+    is_staff: true
+    is_active: true
+    date_joined: 2018-12-05 06:56:32.728509+00:00
+    description: ''
+    groups: []
+    user_permissions: []
+
+
+- model: app.project
+  pk: 1
+  fields: {name: Project 1 (admin), description: Desc project 1 (admin), is_public: false,
+           status: STARTED, startDate: 2018-12-05, endDate: 2019-01-25, created_at: ! '2018-12-05
+      06:57:36.675056+00:00', updated_at: ! '2018-12-05 06:57:36.693008+00:00', created_by: 1}
+
+- model: app.project
+  pk: 2
+  fields: {name: Project 2 (admin), description: '', is_public: false, status: null,
+           startDate: 2018-12-05, endDate: null, created_at: ! '2018-12-05 06:57:48.969886+00:00',
+           updated_at: ! '2018-12-05 06:57:48.987804+00:00', created_by: 1}
+
+- model: app.membership
+  pk: 1
+  fields: {project: 1, user: 1, role: admin}
+
+- model: app.membership
+  pk: 2
+  fields: {project: 2, user: 1, role: admin}
+
+- model: app.membership
+  pk: 3
+  fields: {project: 1, user: 2, role: user}
