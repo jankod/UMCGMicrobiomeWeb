@@ -1,0 +1,13 @@
+{
+  "entrypoints": {
+    "base": {
+      "js": [
+        "static/build/runtime.d41d8cd9.js",
+        "static/build/base.d512aa8d.js"
+      ],
+      "css": [
+        "static/build/base.fd987452.css"
+      ]
+    }
+  }
+}
