@@ -1,6 +1,7 @@
 from .base import *
 
 DEBUG = True
+print("development je ovo")
 
 INSTALLED_APPS += [
     'debug_toolbar',

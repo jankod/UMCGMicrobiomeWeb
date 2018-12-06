@@ -10,11 +10,12 @@ from app.models import Project, Sample, SampleFiles, CustomUser, Membership, Use
 import logging as log
 from app.views_admin import *
 
-from app.util.helper import Message
+from app.util.helper import Message, log
 
 
 @login_not_required
 def public_index(request):
+    log("radi log")
     return render(request, 'public/index.html')
 
 

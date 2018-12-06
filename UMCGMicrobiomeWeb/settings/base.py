@@ -80,8 +80,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
 
 # https://django-glrm.readthedocs.io/en/latest/readme.html#public-views
 PUBLIC_VIEWS = [
@@ -100,3 +100,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y']
 DATE_FORMAT = 'd.m.Y'
+
+
+
+
