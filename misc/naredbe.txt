@@ -1,1 +1,8 @@
+# local
 yarn encore production
+
+# remote
+git fetch --all
+
+python manage.py collectstatic
+
