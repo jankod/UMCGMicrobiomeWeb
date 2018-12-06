@@ -6,8 +6,11 @@ git fetch --all
 git reset --hard origin/master
 
 
+pip install -e requirements.txt
+
 python manage.py collectstatic
 
 sudo cp -rfp app/static/build/ /var/www/html/static/
+
 
 
