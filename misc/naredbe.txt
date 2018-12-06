@@ -3,6 +3,11 @@ yarn encore production
 
 # remote
 git fetch --all
+git reset --hard origin/master
+
 
 python manage.py collectstatic
+
+sudo cp -rfp app/static/build/ /var/www/html/static/
+
 
