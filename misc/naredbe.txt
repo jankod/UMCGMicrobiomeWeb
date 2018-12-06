@@ -12,5 +12,7 @@ python manage.py collectstatic
 
 sudo cp -rfp app/static/build/ /var/www/html/static/
 
+python manage.py migrate
 
+python manage.py loaddata data
 

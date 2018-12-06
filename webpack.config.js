@@ -34,7 +34,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+   // .enableVersioning(Encore.isProduction())
 
     .enableSassLoader()
 
