@@ -5,10 +5,16 @@ from django.urls import path
 
 import logging
 
-logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
+from . import views
+
+#logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
 
 # from app.views import ProjectEditView
-from . import views
+
+# logging.basicConfig(
+#     level=logging.DEBUG,
+#     format=" %(levelname)s %(name)s: %(message)s",
+# )
 
 urlpatterns = [
     path('', views.public_index, name='index'),
@@ -55,7 +61,5 @@ urlpatterns += (
     path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
 )
 
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

@@ -12,10 +12,11 @@ class ProjectForm(forms.ModelForm):
 class SampleForm(forms.ModelForm):
     class Meta:
         model = Sample
-        fields = ['name', 'description', 'year_birth', 'is_male', 'bmi', 'project']
+        fields = ['name', 'project', 'description', 'year_birth', 'is_male', 'bmi']
 
 
 class SampleFilesForm(forms.ModelForm):
     class Meta:
         model = SampleFiles
-        fields = ['file_name', 'description', 'file', 'type', 'sample']
+        # fields = ['file_name', 'description', 'file', 'type', 'sample']
+        fields = [ 'file', 'sample', 'description']

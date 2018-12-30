@@ -147,3 +147,7 @@ class SampleFiles(models.Model):
 
     def get_update_url(self):
         return reverse('app_samplefiles_update', args=(self.pk,))
+
+
+# class Taxonomy(models.Model):
+#     sample_file: ForeignKey(SampleFiles, on_delete=models.CASCADE, related_name="sample_file")

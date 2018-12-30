@@ -1,6 +1,8 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 from django.conf.global_settings import MEDIA_URL
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,6 +79,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'app/static'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -100,9 +104,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y']
 DATE_FORMAT = 'd.m.Y'
-
-
-
 
 DEBUG = True
 
@@ -138,16 +139,52 @@ DATABASES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': "{levelname} {pathname}:{lineno} {message} ",
+            'style': '{',
+        },
+    },
     'handlers': {
-        'null': {
-            'class': 'logging.NullHandler',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter': 'simple'
         },
     },
     'loggers': {
-        'django.server': {
-            'handlers': ['null'],
-            'level': 'INFO',
-            'propagate': False,
+        'app': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'INFO',
+#             'class': 'logging.StreamHandler',
+#             'strm': sys.stdout,
+#         },
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': '../debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'mylogger': {
+#             'handlers': ['console', 'file'],
+#             'filters': [],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     }
+# }

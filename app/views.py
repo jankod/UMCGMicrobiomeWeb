@@ -7,15 +7,23 @@ from global_login_required import login_not_required
 from app.forms import SampleForm, ProjectForm, SampleFilesForm
 from app.models import Project, Sample, SampleFiles, CustomUser, Membership, UserRole
 
-import logging as log
+# import logging as log
 from app.views_admin import *
 
-from app.util.helper import Message, log
+from app.util.helper import Message
 
+import logging
+
+# Get an instance of a logger
+log = logging.getLogger("app")
 
 @login_not_required
 def public_index(request):
-    log("radi log")
+    log.debug("radi log")
+    log.info("deda")
+    log.warning("fdssdfsd")
+    log.error("error")
+    print("----------------")
     return render(request, 'public/index.html')
 
 
