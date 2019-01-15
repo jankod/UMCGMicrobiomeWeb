@@ -3,11 +3,14 @@
 
 {% block content %}
 
-                    Ovo je dashboard
+    Ovo je dashboard
 
-                    <p>
-                        <a href="{% url 'admin:index' %}">Admin</a>
-                    </p>
+    <p>
+        <a href="{% url 'admin:index' %}">Admin</a>
+    </p>
+    <p>
+        <a href="{% url 'upload_files' %}">Upload files</a>
+    </p>
 
 
 {% endblock %}

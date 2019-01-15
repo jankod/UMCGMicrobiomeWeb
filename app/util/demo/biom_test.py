@@ -12,6 +12,8 @@ from biom import parse_table
 # FIRST pip install biom-format
 from scipy._lib.decorator import __init__
 
+from app.util.file_parser import TaxonomyParser
+
 
 def parse_biom_format(path):
     with open(path) as f:
@@ -23,49 +25,7 @@ def parse_biom_format(path):
         return table
 
 
-class SampleTaxonomy:
-    taxes: List[str]
 
-    def __init__(self, name=""):
-        self.name = name
-        self.abundance = 0
-        self.taxes = []
-
-    def __str__(self):
-        return self.name
-
-
-class TaxonomyParser:
-    def __init__(self, file_path):
-
-        self.path = file_path
-        self.sampleTaxonomy = SampleTaxonomy()
-
-    def parse(self) -> SampleTaxonomy:
-
-        with open(self.path) as fp:
-            lines = fp.readlines()
-            for l in lines:
-                if l.startswith("#SampleID"):
-                    sp = l.split('\t')
-                    self.sampleTaxonomy.name = sp[1].strip()
-                    continue
-                if l.startswith("k__Bacteria"):
-                    self.parse_tax_line(l)
-
-        return self.sampleTaxonomy
-
-    def parse_tax_line(self, l):
-        split = l.split("\t")
-        abundance = float(split[1])
-        tax_line = split[0]
-
-        if "|" in tax_line:
-            taxes = tax_line.split("|")
-            self.sampleTaxonomy.abundance = abundance
-            self.sampleTaxonomy.taxes.extend(taxes)
-        else:
-            self.sampleTaxonomy.taxes.append(tax_line)
 
 
 path_tax = 'C:/Data/PBF/Projekti/2018-UMCGMicrobiomeWeb/example_data/example1_metaphlan.txt'
@@ -78,7 +38,6 @@ path_pathway_marged = 'C:/Data/PBF/Projekti/2018-UMCGMicrobiomeWeb/example_data/
 def custom_analyse():
     parser = TaxonomyParser(path_tax)
     sample = parser.parse()
-
 
     print(sample)
 

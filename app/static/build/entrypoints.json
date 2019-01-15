@@ -2,11 +2,11 @@
   "entrypoints": {
     "base": {
       "js": [
-        "static/build/runtime.js",
-        "static/build/base.js"
+        "/static/build/runtime.js",
+        "/static/build/base.js"
       ],
       "css": [
-        "static/build/base.css"
+        "/static/build/base.css"
       ]
     }
   }

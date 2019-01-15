@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h1>Upload files</h1>
+
+    <p>{{ message }}</p>
+
+    <div>
+        <form action="{% url 'upload_files' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+
+
+
+{% endblock %}

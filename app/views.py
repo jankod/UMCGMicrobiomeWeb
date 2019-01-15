@@ -1,34 +1,69 @@
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin, PermissionRequiredMixin
-from django.http import Http404
-from django.shortcuts import render
-from django.views.generic import UpdateView, ListView, CreateView, DetailView
-from global_login_required import login_not_required
+import logging
+from concurrent.futures import ThreadPoolExecutor
+from time import sleep
+from typing import List
 
-from app.forms import SampleForm, ProjectForm, SampleFilesForm
-from app.models import Project, Sample, SampleFiles, CustomUser, Membership, UserRole
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
+from app.forms import UploadFilesForm
+from app.util.file_parser import parse_taxonomy_files, FILE_TYPE_TAXONOMY
+from app.util.helper import Message
 # import logging as log
 from app.views_admin import *
-
-from app.util.helper import Message
-
-import logging
 
 # Get an instance of a logger
 log = logging.getLogger("app")
 
+
 @login_not_required
 def public_index(request):
-    log.debug("radi log")
-    log.info("deda")
-    log.warning("fdssdfsd")
-    log.error("error")
-    print("----------------")
+    log.info("public page")
     return render(request, 'public/index.html')
 
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+# class UploadFilesView(FormView):
+#     form_class = UploadFilesForm
+#     template_name = 'upload_files.html'
+#     success_url = 'upload_files.html'
+#
+#     def post(self, request, *args, **kwargs):
+#         form_class = self.get_form_class()
+#         form = self.get_form(form_class)
+#         files = request.FILES.getlist('files')
+#         if form.is_valid():
+#             for f in files:
+#                 ...  # Do something with each file.
+#             return self.form_valid(form)
+#         else:
+#             return self.form_invalid(form)
+
+
+def upload_files(request):
+    if request.method == 'POST':
+        log.debug("request.user %s", request.user)
+        form = UploadFilesForm(request.POST, request.FILES, user=request.user, )
+        if form.is_valid():
+            # files = form.cleaned_data['files']
+            files = request.FILES.getlist('files')
+            file_type = form.cleaned_data['type']
+            if file_type == FILE_TYPE_TAXONOMY:
+                t = parse_taxonomy_files(files)
+                # sample_exist = Sample.objects.get(name=t.sample_name, project__member__username=request.user)
+                sample = Sample.objects.create(name=t.sample_name, project=form.cleaned_data['project'])
+                sample.save()
+                for file in files:
+
+
+            form = UploadFilesForm(user=request.user)
+            return render(request, 'upload_files.html', {'form': form, 'message': 'Sve ok uneseno u formu'})
+    else:
+        form = UploadFilesForm(user=request.user)
+
+    return render(request, 'upload_files.html', {'form': form, 'message': ''})
 
 
 # @permission_required("dsf")
@@ -129,7 +164,7 @@ class ProjectUpdateView(UpdateView):
     def get_object(self, queryset=None):
         p = super(ProjectUpdateView, self).get_object(queryset)
         if not Membership.is_user_project_admin(p, self.request.user):
-            raise Http404(Message.dont_have_permision)
+            raise Http404(Message.dont_have_permission)
         return p
 
 
@@ -167,6 +202,12 @@ class SampleUpdateView(UpdateView):
 
 class SampleFilesListView(ListView):
     model = SampleFiles
+    paginate_by = 10
+
+    def get_queryset(self):
+        q = super(SampleFilesListView, self).get_queryset()
+        q = q.prefetch_related('sample', 'sample__project')
+        return q
 
 
 class SampleFilesCreateView(CreateView):
@@ -181,6 +222,3 @@ class SampleFilesDetailView(DetailView):
 class SampleFilesUpdateView(UpdateView):
     model = SampleFiles
     form_class = SampleFilesForm
-
-
-

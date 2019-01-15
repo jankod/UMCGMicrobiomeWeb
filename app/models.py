@@ -149,5 +149,53 @@ class SampleFiles(models.Model):
         return reverse('app_samplefiles_update', args=(self.pk,))
 
 
+class TaxonomyAbundance(models.Model):
+    abundance = models.IntegerField()
+    rank1_kingdom = models.CharField(max_length=100)
+    rank2_phylum = models.CharField(max_length=100)
+    rank3_class = models.CharField(max_length=100)
+    rank4_order = models.CharField(max_length=100)
+    rank5_family = models.CharField(max_length=100)
+    rank6_genus = models.CharField(max_length=100)
+    rank7_strain = models.CharField(max_length=100)
+    sample_file = models.ForeignKey(SampleFiles, on_delete=models.CASCADE, related_name="sample_files")
+
+
 # class Taxonomy(models.Model):
 #     sample_file: ForeignKey(SampleFiles, on_delete=models.CASCADE, related_name="sample_file")
+
+
+# class SampleStatistic(models.Model):
+    # Project_ID(link
+    # na
+    # Project)
+    # Metaphlan_PC1
+    # Metaphlan_PC2
+    # Metaphlan_PC3
+    # Metaphlan_tSNE_1
+    # Metaphlan_tSNE_2
+    # Metaphlan_tSNE_3
+    # Humann2_PC1
+    # Humann2_PC2
+    # Humann2_PC3
+    # Humann2_tSNE_1
+    # Humann2_tSNE_2
+    # Humann2_tSNE_3
+
+
+
+# class ProjectStatistic(models.Model):
+#     Sample
+#     ID
+#     Metaphlan_AD_Richness
+#     float
+#     Metaphlan_AD_Shannon
+#     flaot
+#     Metaphlan_AD_Simpson
+#     float
+#     Humann2_AD_Richness
+#     float
+#     Humann2_AD_Shannon
+#     float
+#     Humann2_AD_Simpson
+#     float

@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <p><a class="btn btn-default" href="{% url 'app_samplefiles_list' %}">SampleFiles Listing</a></p>
+    <p><a class="btn btn-ghost-primary" role="button" href="{% url 'app_samplefiles_list' %}">Files Listing</a></p>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}

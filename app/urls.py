@@ -3,22 +3,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-import logging
-
 from . import views
 
-#logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
+# logging.getLogger('requests.packages.urllib3').setLevel(logging.ERROR)
 
-# from app.views import ProjectEditView
-
-# logging.basicConfig(
-#     level=logging.DEBUG,
-#     format=" %(levelname)s %(name)s: %(message)s",
-# )
 
 urlpatterns = [
     path('', views.public_index, name='index'),
     path('dashboard', views.dashboard, name='dashboard'),
+    path('upload_files', views.upload_files, name='upload_files')
+    # views.UploadFilesView.as_view()
+
 
     # path('demo_coreui1', views.demo_coreui1, name='demo_coreui1'),
     # path('page1', views.page1, name='page1'),

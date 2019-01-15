@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <p><a class="btn btn-default" href="{% url 'app_project_list' %}">Project Listing</a></p>
+    <div>
+        <button class="btn btn-primary">Start analize this project</button>
+
+    </div>
+
+    <p><a class="btn btn-secondary" href="{% url 'app_project_list' %}">Project Listing</a></p>
     <p><a href=""></a></p>
     <table class="table">
         <tr>

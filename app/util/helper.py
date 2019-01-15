@@ -1,10 +1,9 @@
 # ROLE_ADMIN = 'admin'
 # ROLE_USER = 'user'
-from django.conf import settings
 
 
 class Message(object):
-    dont_have_permision = "You don't have permision";
+    dont_have_permission: str = "You don't have permission"
 
 
 def log(msg):
