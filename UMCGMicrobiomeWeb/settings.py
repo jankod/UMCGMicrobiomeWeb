@@ -128,6 +128,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'ja',
         'HOST': '127.0.0.1',
+        'CONN_MAX_AGE': 9893600,
         # 'PORT': '5432',
         'OPTIONS': {
             'charset': 'utf8mb4',
@@ -165,6 +166,11 @@ LOGGING = {
             'propagate': True,
         },
         'django.template': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'django.db.backends': {  # SQL log
             'handlers': ['console'],
             'level': 'WARNING',
             'propagate': True,

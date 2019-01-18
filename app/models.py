@@ -128,7 +128,7 @@ class SampleFiles(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     # Relationship Fields
-    sample = ForeignKey(Sample, on_delete=models.CASCADE, related_name="samples")
+    sample = models.ForeignKey(Sample, on_delete=models.CASCADE, related_name="sample_files")
 
     class Meta:
         ordering = ('-created_at',)
@@ -150,15 +150,16 @@ class SampleFiles(models.Model):
 
 
 class TaxonomyAbundance(models.Model):
-    abundance = models.IntegerField()
+    abundance = models.DecimalField(decimal_places=10, max_digits=18)
     rank1_kingdom = models.CharField(max_length=100)
     rank2_phylum = models.CharField(max_length=100)
     rank3_class = models.CharField(max_length=100)
     rank4_order = models.CharField(max_length=100)
     rank5_family = models.CharField(max_length=100)
     rank6_genus = models.CharField(max_length=100)
-    rank7_strain = models.CharField(max_length=100)
-    sample_file = models.ForeignKey(SampleFiles, on_delete=models.CASCADE, related_name="sample_files")
+    rank7_species = models.CharField(max_length=100)
+    rank8_strain = models.CharField(max_length=100)
+    sample = models.ForeignKey(Sample, on_delete=models.CASCADE, related_name="sample_taxonomyabundances")
 
 
 # class Taxonomy(models.Model):

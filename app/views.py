@@ -1,12 +1,14 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep
-from typing import List
+from typing import List, Any, Union
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from app.forms import UploadFilesForm
-from app.util.file_parser import parse_taxonomy_files, FILE_TYPE_TAXONOMY
+from app.models import TaxonomyAbundance
+from app.util.file_parser import parse_taxonomy_file, FILE_TYPE_TAXONOMY, TaxonomyAbundanceParserResult, \
+    FILE_TYPE_TAXONOMY_MERGED, parse_taxonomy_merged_file, TaxonomyParserResult
 from app.util.helper import Message
 # import logging as log
 from app.views_admin import *
@@ -46,24 +48,61 @@ def upload_files(request):
     if request.method == 'POST':
         log.debug("request.user %s", request.user)
         form = UploadFilesForm(request.POST, request.FILES, user=request.user, )
+        messages = []
         if form.is_valid():
             # files = form.cleaned_data['files']
             files = request.FILES.getlist('files')
             file_type = form.cleaned_data['type']
+            project = form.cleaned_data['project']
             if file_type == FILE_TYPE_TAXONOMY:
-                t = parse_taxonomy_files(files)
-                # sample_exist = Sample.objects.get(name=t.sample_name, project__member__username=request.user)
-                sample = Sample.objects.create(name=t.sample_name, project=form.cleaned_data['project'])
-                sample.save()
-                for file in files:
-
+                for f in files:
+                    tax_parse_result = parse_taxonomy_file(f)
+                    messages = handle_one_sample_taxonomy(project, tax_parse_result)
+            if file_type == FILE_TYPE_TAXONOMY_MERGED:
+                for f in files:
+                    result: List[TaxonomyParserResult] = parse_taxonomy_merged_file(f)
+                    for tax_parser_result in result:
+                        messages = handle_one_sample_taxonomy(project, tax_parser_result)
 
             form = UploadFilesForm(user=request.user)
-            return render(request, 'upload_files.html', {'form': form, 'message': 'Sve ok uneseno u formu'})
+            return render(request, 'upload_files.html',
+                          {'form': form, 'message': 'Sve ok uneseno u formu', 'messages': messages})
     else:
         form = UploadFilesForm(user=request.user)
 
     return render(request, 'upload_files.html', {'form': form, 'message': ''})
+
+
+def handle_one_sample_taxonomy(project: Project, tax_parse_result: TaxonomyParserResult) -> List[str]:
+    messages = []
+    sample: Sample = Sample.objects.filter(name=tax_parse_result.sample_name).first()
+    if sample:
+        messages.append(f"Exist sample {tax_parse_result.sample_name}, remove prijasnje rezultate")
+        TaxonomyAbundance.objects.filter(sample=sample).delete()
+        pass
+    else:
+        messages.append(f"Create new sample {tax_parse_result.sample_name} in project {project.name}")
+        sample = Sample.objects.create(name=tax_parse_result.sample_name, project=project)
+        sample.save()
+
+    tax_parse_result.normalise()
+
+
+    ta: TaxonomyAbundanceParserResult
+    taxes = []
+    for ta in tax_parse_result.taxonomy_abundances:
+        if ta.abundance == 0:
+            continue
+        tax = ta.to_model()
+        tax.sample = sample
+        taxes.append(tax)
+
+    log.debug(f"spremam u bazu {len(taxes)} redova za sample {sample.name}")
+    TaxonomyAbundance.objects.bulk_create(taxes)
+    log.debug(f"gotovo")
+
+    messages.append(f"Add {tax_parse_result.taxonomy_abundances} taxonomy-abundances into db")
+    return messages
 
 
 # @permission_required("dsf")
@@ -92,7 +131,7 @@ def upload_files(request):
 #         id = request.GET.get('id')
 #         if id is not None:
 #             project = get_object_or_404(Project, pk=id)
-#             # TODO dodati validaciju
+
 #             # if project.user_admins. != request.user:
 #             #     return HttpResponseForbidden()
 #             form = CreateProjectForm(instance=project)
