@@ -96,6 +96,7 @@ class TaxonomyParser:
             if l.startswith("#SampleID"):
                 sp = l.split('\t')
                 result.sample_name = sp[1].strip()
+                log.debug(f"NAme {result.sample_name}")
                 continue
 
             if l.startswith("#"):

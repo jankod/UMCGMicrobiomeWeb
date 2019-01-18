@@ -57,12 +57,12 @@ def upload_files(request):
             if file_type == FILE_TYPE_TAXONOMY:
                 for f in files:
                     tax_parse_result = parse_taxonomy_file(f)
-                    messages = handle_one_sample_taxonomy(project, tax_parse_result)
+                    messages.extend(handle_one_sample_taxonomy(project, tax_parse_result))
             if file_type == FILE_TYPE_TAXONOMY_MERGED:
                 for f in files:
                     result: List[TaxonomyParserResult] = parse_taxonomy_merged_file(f)
                     for tax_parser_result in result:
-                        messages = handle_one_sample_taxonomy(project, tax_parser_result)
+                        messages.extend(handle_one_sample_taxonomy(project, tax_parser_result))
 
             form = UploadFilesForm(user=request.user)
             return render(request, 'upload_files.html',
@@ -76,10 +76,9 @@ def upload_files(request):
 def handle_one_sample_taxonomy(project: Project, tax_parse_result: TaxonomyParserResult) -> List[str]:
     messages = []
     sample: Sample = Sample.objects.filter(name=tax_parse_result.sample_name).first()
-    if sample:
+    if sample is not None:
         messages.append(f"Exist sample {tax_parse_result.sample_name}, remove prijasnje rezultate")
         TaxonomyAbundance.objects.filter(sample=sample).delete()
-        pass
     else:
         messages.append(f"Create new sample {tax_parse_result.sample_name} in project {project.name}")
         sample = Sample.objects.create(name=tax_parse_result.sample_name, project=project)
@@ -96,12 +95,16 @@ def handle_one_sample_taxonomy(project: Project, tax_parse_result: TaxonomyParse
         tax = ta.to_model()
         tax.sample = sample
         taxes.append(tax)
+        if len(taxes) > 5_000:
+            log.debug(f"spremam  5 000 njih prvo")
+            TaxonomyAbundance.objects.bulk_create(taxes)
+            taxes.clear()
 
-    log.debug(f"spremam u bazu {len(taxes)} redova za sample {sample.name}")
+    log.debug(f"spremam u bazu  ostatak od {len(taxes)} redova za sample {sample.name}, bilo ih je {len(tax_parse_result.taxonomy_abundances)}")
     TaxonomyAbundance.objects.bulk_create(taxes)
     log.debug(f"gotovo")
 
-    messages.append(f"Add {tax_parse_result.taxonomy_abundances} taxonomy-abundances into db")
+    messages.append(f"Add {len(taxes)} taxonomy-abundances into db")
     return messages
 
 

@@ -1,4 +1,4 @@
-#SampleID	Metaphlan2_Analysis
+#SampleID	Metaphlan2_Analysis3
 k__Bacteria	100.0
 k__Bacteria|p__Bacteroidetes	58.60751
 k__Bacteria|p__Firmicutes	25.92095

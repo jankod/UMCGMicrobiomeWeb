@@ -128,7 +128,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'ja',
         'HOST': '127.0.0.1',
-        'CONN_MAX_AGE': 9893600,
+        # 'CONN_MAX_AGE': 9893600,
         # 'PORT': '5432',
         'OPTIONS': {
             'charset': 'utf8mb4',
