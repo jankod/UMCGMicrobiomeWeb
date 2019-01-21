@@ -93,6 +93,7 @@ def handle_one_sample_taxonomy(project: Project, tax_parse_result: TaxonomyParse
         if ta.abundance == 0:
             continue
         tax = ta.to_model()
+        tax_int = tax.to_int_model()
         tax.sample = sample
         taxes.append(tax)
         if len(taxes) > 5_000:

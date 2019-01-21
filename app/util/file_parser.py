@@ -51,7 +51,7 @@ class TaxonomyAbundanceParserResult:
                 ta.rank8_strain = t[3:]
                 continue
 
-            log.warning(f"Unknown rannk '{t}'")
+            log.warning(f"Unknown rank '{t}'")
 
         return ta
 
@@ -63,6 +63,8 @@ TaxonomyAbundanceList = List[TaxonomyAbundanceParserResult]
 
 
 class TaxonomyParserResult:
+
+    taxonomy_abundances: List[TaxonomyAbundanceParserResult]
 
     def __init__(self, sample_name: str = "", taxonomy_abundance: TaxonomyAbundanceList = []):
         self.sample_name = sample_name
@@ -132,6 +134,11 @@ class TaxonomyParser:
 class TaxonomyMergedParser:
     def __init__(self, file_content: str):
         self.file_content = file_content
+
+
+    def parse2(self):
+        from django.core.cache import cache
+
 
     def parse(self) -> List[TaxonomyParserResult]:
         result: List[TaxonomyParserResult] = []
