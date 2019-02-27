@@ -95,7 +95,7 @@ PUBLIC_VIEWS = [
 ]
 PUBLIC_PATHS = [
     # '^%s.*' % MEDIA_URL,  # allow public access to any media on your application
-    r'^/accounts/.*',  # allow public access to all django-allauth views
+    r'^/accounts/.*',  # allow public access to all django-all auth views
 ]
 
 AUTH_USER_MODEL = 'app.CustomUser'
