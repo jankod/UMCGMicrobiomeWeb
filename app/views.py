@@ -87,12 +87,12 @@ def handle_one_sample_taxonomy(project: Project, tax_parse_result: TaxonomyParse
     tax_parse_result.normalise()
 
 
-    ta: TaxonomyAbundanceParserResult
+    tax: TaxonomyAbundanceParserResult
     taxes = []
-    for ta in tax_parse_result.taxonomy_abundances:
-        if ta.abundance == 0:
+    for tax in tax_parse_result.taxonomy_abundances:
+        if tax.abundance == 0:
             continue
-        tax = ta.to_model()
+        tax = tax.to_model()
         tax_int = tax.to_int_model()
         tax.sample = sample
         taxes.append(tax)
